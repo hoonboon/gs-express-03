@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  h1= title
+
+  ul
+  each bookInstance in bookInstance_list
+    li
+      a(href=bookInstance.url) #{bookInstance.book.title} : #{bookInstance.imprint} - 
+      if bookInstance.status=='Available'
+        span.text-success #{bookInstance.status}
+      else if bookInstance.status=='Maintenance'
+        span.text-danger #{bookInstance.status}
+      else
+        span.text-warning #{bookInstance.status}
+      if bookInstance.status!='Available'
+        span  (Due: #{bookInstance.dueBackDisplay})
+
+  else
+    li No book instances found.

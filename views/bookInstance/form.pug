@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  h1 #{title}
+  
+  form(method='POST' action='')
+    div.form-group
+      label(for='book') Book: 
+      if (bookInstance && bookInstance._id)
+        p #{bookInstance.book.title}
+        input#book.form-control(type='hidden', name='book', value=bookInstance.book._id)
+      else
+        select#book.form-control(type='select' placeholder='Select a Book' name='book')
+          for book in books
+            if bookInstance
+              option(value=book._id selected=(bookInstance.book.toString() == book._id.toString() ? 'selected' : false)) #{book.title}
+            else
+              option(value=book._id) #{book.title}
+    
+    div.form-group
+      label(for='imprint') Imprint: 
+      input#imprint.form-control(type='text', placeholder='Publisher and date information' name='imprint' value=(bookInstance === undefined ? '' : bookInstance.imprint))
+      
+    div.form-group
+      label(for='dueBack') Due Back Date:
+      input#dueBack.form-control(type='date', name='dueBack' value=(bookInstance === undefined ? '' : bookInstance.dueBackInput))
+    
+    div.form-group
+      label(for='status') Status: 
+      select#status.form-control(type='select' placeholder='Select a Status' name='status')
+        for status in statusOptions
+          if bookInstance
+            option(value=status.value selected=(bookInstance.status == status.value ? 'selected' : false)) #{status.label}
+          else
+            option(value=status.value) #{status.label}
+    
+    button.btn.btn-primary(type='submit') Save

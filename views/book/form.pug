@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  h1 #{title}
+  
+  form(method='POST' action='')
+    div.form-group
+      label(for='title') Book Title:
+      input#title.form-control(type='text', placeholder='Book Title' name='title' value=(book === undefined ? '' : book.title))
+    div.form-group
+      label(for='author') Author:
+      select#author.form-control(type='select', placeholder='Select Author' name='author')
+        for author in authors
+          if book
+            option(
+              value=author._id 
+              selected=(
+                author._id.toString() == book.author 
+                || author._id.toString() == book.author._id
+              ) ? 'selected' : false
+            ) #{author.fullName}
+          else
+            option(value=author._id) #{author.fullName}
+    div.form-group
+      label(for='summary') Summary:
+      input#summary.form-control(type='textarea', placeholder='Summary' name='summary' value=(book === undefined ? '' : book.summary))
+    div.form-group
+      label(for='isbn') ISBN:
+      input#isbn.form-control(type='text', placeholder='ISBN' name='isbn' value=(book === undefined ? '' : book.isbn))
+    div.form-group
+      label Genre:
+      div
+        for genre in genres
+          div(style='display: inline; padding-right: 10px;')
+            input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id checked=genre.checked)
+            label(for=genre._id) #{genre.name}
+    button.btn.btn-primary(type='submit') Save
