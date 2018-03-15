@@ -13,7 +13,7 @@ var app = express();
 
 // set up mongoose connection
 var mongoose = require('mongoose');
-var conStr = 'mongodb://mongoadmin:mongoinst1@fourmi-t01-shard-00-00-nibln.mongodb.net:27017,fourmi-t01-shard-00-01-nibln.mongodb.net:27017,fourmi-t01-shard-00-02-nibln.mongodb.net:27017/local_library?ssl=true&replicaSet=FOURMI-T01-shard-0&authSource=admin';
+var conStr = process.env.MONGODB_URI || 'mongodb://mongoadmin:mongoinst1@fourmi-t01-shard-00-00-nibln.mongodb.net:27017,fourmi-t01-shard-00-01-nibln.mongodb.net:27017,fourmi-t01-shard-00-02-nibln.mongodb.net:27017/local_library?ssl=true&replicaSet=FOURMI-T01-shard-0&authSource=admin';
 
 mongoose.connect(conStr, { useMongoClient: true });
 mongoose.Promise = global.Promise;
